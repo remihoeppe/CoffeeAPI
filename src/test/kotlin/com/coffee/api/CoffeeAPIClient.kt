@@ -10,10 +10,7 @@ import org.http4k.filter.DebuggingFilters.PrintResponse
 
 fun main() {
     val client: HttpHandler = JavaHttpClient()
-
     val printingClient: HttpHandler = PrintResponse().then(client)
-
     val response: Response = printingClient(Request(GET, "http://localhost:9000/ping"))
-
     println(response.bodyString())
 }

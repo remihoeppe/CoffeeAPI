@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-21T08:47:34" hostname="MacBook-Pro-3" time="0.031">
+  <properties/>
+  <testcase name="Testing server root endpoint()" classname="com.coffee.api.CoffeeAPITest" time="0.031"/>
+  <system-out><![CDATA[***** REQUEST: GET: / *****
+GET / HTTP/1.1
+
+
+
+***** RESPONSE 200 to GET: / *****
+HTTP/1.1 200 OK
+
+
+Coffee API
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
