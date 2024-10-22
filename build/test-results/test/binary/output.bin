@@ -1,10 +1,10 @@
-***** REQUEST: GET: / *****
-GET / HTTP/1.1
+/***** REQUEST: GET: /roasters/grindsmith *****
+#GET /roasters/grindsmith HTTP/1.1
 
 
 
-#***** RESPONSE 200 to GET: / *****
+6***** RESPONSE 200 to GET: /roasters/grindsmith *****
 HTTP/1.1 200 OK
+/content-type: application/json; charset=utf-8
 
-
-Coffee API
+M{"name":"Grindsmith","url":"https://grindsmith.com/","address":"123 Street"}

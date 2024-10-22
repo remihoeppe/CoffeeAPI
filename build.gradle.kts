@@ -54,9 +54,10 @@ dependencies {
     implementation(platform("org.http4k:http4k-bom:5.32.4.0"))
     implementation(platform("org.http4k:http4k-connect-bom:5.24.1.0"))
     implementation("org.http4k:http4k-core")
+    implementation("org.http4k:http4k-format-core")
+    implementation("org.http4k:http4k-format-moshi:5.32.4.0")
     testImplementation("org.http4k:http4k-testing-approval")
     testImplementation("org.http4k:http4k-testing-hamkrest")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.1")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.1")
 }
-
