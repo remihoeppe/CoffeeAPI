@@ -22,7 +22,7 @@ fun main() {
 val roastersLens = autoBody<Roasters>().toLens()
 val roasterLens = autoBody<Roaster>().toLens()
 
-fun coffeeAPI() : HttpHandler {
+fun coffeeAPI(): HttpHandler {
     var roasters = mutableListOf(
         Roaster("Monmouth Coffee Company", "https://www.monmouthcoffee.co.uk/", "123 Street"),
         Roaster("Square Mile Coffee Roasters", "https://shop.squaremilecoffee.com/", "123 Street"),
@@ -46,25 +46,23 @@ fun coffeeAPI() : HttpHandler {
             val roaster = roasters.find { it.name.equals(name, ignoreCase = true) }
             roaster?.let {
                 roasterLens.inject(roaster, Response(OK))
-            }?:Response(NOT_FOUND)
+            } ?: Response(NOT_FOUND)
         },
 
         "/roasters" bind Method.POST to { request ->
-            try {
-                val newRoasters = roastersLens.extract(request).roasters
-                val invalidRoasters = newRoasters.filter { it.name.isNotBlank() || !isValidUrl(it.url) }
-                if (invalidRoasters.isNotEmpty()) {
+            runCatching {
+                val newRoaster = roasterLens.extract(request)
+                if(newRoaster.isValid()) {
+                    roasters.add(newRoaster)
+                    Response(NO_CONTENT)
+                } else {
                     Response(Status.BAD_REQUEST).body("Invalid roaster data")
                 }
-                roasters.addAll(newRoasters)
-                Response(NO_CONTENT)
-            } catch (e: Exception) {
+            }.getOrElse {
                 Response(Status.BAD_REQUEST).body("Invalid Data")
             }
         }
 
-
-//
     ).withFilter(DebuggingFilters.PrintRequestAndResponse().then(ServerFilters.CatchAll()))
 }
 
@@ -73,11 +71,8 @@ fun coffeeAPI() : HttpHandler {
 data class Roasters(val roasters: List<Roaster> = emptyList())
 data class Roaster(val name: String, val url: String, val address: String)
 
-fun isValidUrl(url: String): Boolean {
-    return try {
-        val uri = java.net.URI(url)
-        uri.scheme == "http" || uri.scheme == "https"
-    } catch (e: Exception) {
-        false
-    }
+
+fun Roaster.isValid(): Boolean {
+    val (name, url, address) = this
+    return name.isNotEmpty() && url.isNotEmpty() && address.isNotEmpty()
 }

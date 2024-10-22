@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-22T07:53:45" hostname="MacBook-Pro-3" time="0.281">
+<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-22T08:12:20" hostname="MacBook-Pro-3" time="0.265">
   <properties/>
-  <testcase name="API returns a specific roaster when GET requests contains a name parameter()" classname="com.coffee.api.CoffeeAPITest" time="0.281"/>
-  <system-out><![CDATA[***** REQUEST: GET: /roasters/grindsmith *****
-GET /roasters/grindsmith HTTP/1.1
+  <testcase name="API should return a 204 when valid data has been sent through a POST request()" classname="com.coffee.api.CoffeeAPITest" time="0.265"/>
+  <system-out><![CDATA[***** REQUEST: POST: /roasters *****
+POST /roasters HTTP/1.1
+
+
+{"name":"Verve Coffee","url":"https://vervecoffee.com","address":"Santa Cruz, CA"}
+Name: Verve Coffee, URL: https://vervecoffee.com, address: false
+***** RESPONSE 204 to POST: /roasters *****
+HTTP/1.1 204 No Content
 
 
 
-***** RESPONSE 200 to GET: /roasters/grindsmith *****
-HTTP/1.1 200 OK
-content-type: application/json; charset=utf-8
-
-{"name":"Grindsmith","url":"https://grindsmith.com/","address":"123 Street"}
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

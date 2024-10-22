@@ -22,9 +22,11 @@ class CoffeeAPITest {
                 "{\"name\":\"Grindsmith\",\"url\":\"https://grindsmith.com/\",\"address\":\"123 Street\"}," +
                 "{\"name\":\"Curve Coffee\",\"url\":\"https://www.curveroasters.co.uk/\",\"address\":\"123 Street\"}]}"
 
-    private val grindSmithJson = "{\"name\":\"Grindsmith\",\"url\":\"https://grindsmith.com/\",\"address\":\"123 Street\"}"
-    private val newRoasterJson ="{\"roasters\":[{\"name\":\"Verve Coffee\",\"url\":\"https://vervecoffee.com\",\"address\":\"Santa Cruz, CA\"}]}"
-    val invalidData = "{\"roasters\":[{\"name\":\"\",\"url\":\"\",\"address\":\"\"}]}"
+    private val grindSmithJson =
+        "{\"name\":\"Grindsmith\",\"url\":\"https://grindsmith.com/\",\"address\":\"123 Street\"}"
+    private val newRoasterJson =
+        "{\"name\":\"Verve Coffee\",\"url\":\"https://vervecoffee.com\",\"address\":\"Santa Cruz, CA\"}"
+    val invalidData = "{\"name\":\"\",\"url\":\"\",\"address\":\"\"}"
 
     @Test
     fun `Testing server root endpoint`() {
