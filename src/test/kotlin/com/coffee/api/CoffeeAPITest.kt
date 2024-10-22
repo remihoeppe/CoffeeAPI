@@ -45,6 +45,12 @@ class CoffeeAPITest {
     }
 
     @Test
+    fun `API should return 404 when an invalid name is send through a GET request`() {
+        val response = api(Request(GET, "/roaster/covfefe"))
+        response.expectNotFound()
+    }
+
+    @Test
     fun `API should return 400 when invalid roaster data is sent`() {
 //        Only testing if any of the data field is empty.
 //        TODO: Add supplemental checks re valid URL
@@ -66,8 +72,7 @@ class CoffeeAPITest {
 
     @Test
     fun `API should return 404 when invalid name param sent through DEL request`() {
-        val response = api(Request(DELETE, "/roasters/covfefe"))
-        assertEquals(NOT_FOUND, response.status)
+        api(Request(DELETE, "/roasters/covfefe")).expectNotFound()
     }
 }
 
@@ -78,5 +83,10 @@ private fun Response.expectOK(): Response {
 
 private fun Response.expectNoContent() : Response {
     assertEquals(NO_CONTENT, this.status)
+    return this
+}
+
+private fun Response.expectNotFound() : Response {
+    assertEquals(NOT_FOUND, this.status)
     return this
 }

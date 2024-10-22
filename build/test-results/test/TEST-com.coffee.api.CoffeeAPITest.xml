@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-22T09:47:07" hostname="MacBook-Pro-3" time="0.026">
+<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-22T09:50:40" hostname="MacBook-Pro-3" time="0.025">
   <properties/>
-  <testcase name="API should return 404 when invalid name param sent through DEL request()" classname="com.coffee.api.CoffeeAPITest" time="0.026"/>
+  <testcase name="API should return 404 when invalid name param sent through DEL request()" classname="com.coffee.api.CoffeeAPITest" time="0.025"/>
   <system-out><![CDATA[***** REQUEST: DELETE: /roasters/covfefe *****
 DELETE /roasters/covfefe HTTP/1.1
 
