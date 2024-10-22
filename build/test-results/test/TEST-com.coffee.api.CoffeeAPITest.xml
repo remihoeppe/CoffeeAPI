@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-22T08:12:20" hostname="MacBook-Pro-3" time="0.265">
+<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-22T09:47:07" hostname="MacBook-Pro-3" time="0.026">
   <properties/>
-  <testcase name="API should return a 204 when valid data has been sent through a POST request()" classname="com.coffee.api.CoffeeAPITest" time="0.265"/>
-  <system-out><![CDATA[***** REQUEST: POST: /roasters *****
-POST /roasters HTTP/1.1
+  <testcase name="API should return 404 when invalid name param sent through DEL request()" classname="com.coffee.api.CoffeeAPITest" time="0.026"/>
+  <system-out><![CDATA[***** REQUEST: DELETE: /roasters/covfefe *****
+DELETE /roasters/covfefe HTTP/1.1
 
 
-{"name":"Verve Coffee","url":"https://vervecoffee.com","address":"Santa Cruz, CA"}
-Name: Verve Coffee, URL: https://vervecoffee.com, address: false
-***** RESPONSE 204 to POST: /roasters *****
-HTTP/1.1 204 No Content
+
+***** RESPONSE 404 to DELETE: /roasters/covfefe *****
+HTTP/1.1 404 Not Found
 
 
 

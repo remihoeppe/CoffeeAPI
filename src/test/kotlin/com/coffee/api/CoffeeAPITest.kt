@@ -1,7 +1,6 @@
 package com.coffee.api
 
-import org.http4k.core.Method.GET
-import org.http4k.core.Method.POST
+import org.http4k.core.Method.*
 import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
@@ -47,6 +46,8 @@ class CoffeeAPITest {
 
     @Test
     fun `API should return 400 when invalid roaster data is sent`() {
+//        Only testing if any of the data field is empty.
+//        TODO: Add supplemental checks re valid URL
         val response = api(Request(POST, "/roasters").body(invalidData))
         assertEquals(Status.BAD_REQUEST, response.status)
     }
@@ -54,13 +55,28 @@ class CoffeeAPITest {
     @Test
     fun `API should return a 204 when valid data has been sent through a POST request`() {
         val response = api(Request(POST, "/roasters").body(newRoasterJson))
-        assertEquals(NO_CONTENT, response.status)
+        response.expectNoContent()
     }
 
+    @Test
+    fun `API should return 204 when valid name parameter sent through DELETE request`() {
+        val response = api(Request(DELETE, "/roasters/grindsmith"))
+        response.expectNoContent()
+    }
 
+    @Test
+    fun `API should return 404 when invalid name param sent through DEL request`() {
+        val response = api(Request(DELETE, "/roasters/covfefe"))
+        assertEquals(NOT_FOUND, response.status)
+    }
 }
 
 private fun Response.expectOK(): Response {
     assertEquals(OK, this.status)
+    return this
+}
+
+private fun Response.expectNoContent() : Response {
+    assertEquals(NO_CONTENT, this.status)
     return this
 }

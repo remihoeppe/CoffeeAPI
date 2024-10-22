@@ -1,11 +1,10 @@
-%***** REQUEST: POST: /roasters *****
-POST /roasters HTTP/1.1
+/***** REQUEST: DELETE: /roasters/covfefe *****
+#DELETE /roasters/covfefe HTTP/1.1
 
 
-S{"name":"Verve Coffee","url":"https://vervecoffee.com","address":"Santa Cruz, CA"}
-AName: Verve Coffee, URL: https://vervecoffee.com, address: false
-,***** RESPONSE 204 to POST: /roasters *****
-HTTP/1.1 204 No Content
+
+6***** RESPONSE 404 to DELETE: /roasters/covfefe *****
+HTTP/1.1 404 Not Found
 
 
 

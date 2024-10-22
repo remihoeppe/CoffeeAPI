@@ -1,6 +1,4 @@
 package com.coffee.api
-
-
 import org.http4k.core.*
 import org.http4k.core.Method.GET
 import org.http4k.core.Status.Companion.NOT_FOUND
@@ -60,6 +58,17 @@ fun coffeeAPI(): HttpHandler {
                 }
             }.getOrElse {
                 Response(Status.BAD_REQUEST).body("Invalid Data")
+            }
+        },
+
+        "/roasters/{name}" bind Method.DELETE to { request ->
+            val name = request.path("name")
+            val roaster = roasters.find { it.name.equals(name, ignoreCase = true) }
+            if(roaster != null) {
+                roasters.remove(roaster)
+                Response(NO_CONTENT)
+            } else {
+                Response(NOT_FOUND)
             }
         }
 
