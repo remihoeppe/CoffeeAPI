@@ -1,10 +1,10 @@
-/***** REQUEST: DELETE: /roasters/covfefe *****
-#DELETE /roasters/covfefe HTTP/1.1
++***** REQUEST: GET: /roaster/covfefe *****
+GET /roaster/covfefe HTTP/1.1
 
 
 
-6***** RESPONSE 404 to DELETE: /roasters/covfefe *****
-HTTP/1.1 404 Not Found
+2***** RESPONSE 404 to GET: /roaster/covfefe *****
+HTTP/1.1 404 Route not found
 
 
 

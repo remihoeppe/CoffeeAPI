@@ -60,14 +60,13 @@ class CoffeeAPITest {
 
     @Test
     fun `API should return a 204 when valid data has been sent through a POST request`() {
-        val response = api(Request(POST, "/roasters").body(newRoasterJson))
-        response.expectNoContent()
+        api(Request(POST, "/roasters").body(newRoasterJson)).expectNoContent()
+
     }
 
     @Test
     fun `API should return 204 when valid name parameter sent through DELETE request`() {
-        val response = api(Request(DELETE, "/roasters/grindsmith"))
-        response.expectNoContent()
+        api(Request(DELETE, "/roasters/grindsmith")).expectNoContent()
     }
 
     @Test
@@ -81,12 +80,12 @@ private fun Response.expectOK(): Response {
     return this
 }
 
-private fun Response.expectNoContent() : Response {
+private fun Response.expectNoContent(): Response {
     assertEquals(NO_CONTENT, this.status)
     return this
 }
 
-private fun Response.expectNotFound() : Response {
+private fun Response.expectNotFound(): Response {
     assertEquals(NOT_FOUND, this.status)
     return this
 }
