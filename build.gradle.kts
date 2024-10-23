@@ -2,6 +2,10 @@ import org.gradle.api.JavaVersion.VERSION_11
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
+val exposed_version: String by project
+val postgres_version: String by project
+val h2_version: String by project
+
 plugins {
     kotlin("jvm") version "2.0.20"
     application
@@ -56,6 +60,17 @@ dependencies {
     implementation("org.http4k:http4k-core")
     implementation("org.http4k:http4k-format-core")
     implementation("org.http4k:http4k-format-moshi:5.32.4.0")
+    implementation("org.http4k:http4k-core:4.x.x")
+
+    //    DB
+    implementation("org.postgresql:postgresql:$postgres_version")
+    implementation("com.h2database:h2:$h2_version")
+    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
+
+
+
     testImplementation("org.http4k:http4k-testing-approval")
     testImplementation("org.http4k:http4k-testing-hamkrest")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.1")

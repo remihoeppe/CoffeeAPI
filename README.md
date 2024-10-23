@@ -26,6 +26,20 @@ supply, at the very least, a valid roaster name and website URL.
 
 -> When a client sends a POST request to `/roasters`, accompanied with valid data, it should create a new roaster
 
+### 4. Deleting a roaster
+
+As a client of the API, I should be able to delete a roaster from the API DB.
+
+-> When a client sends a DELETE request to `/roasters/{name}`, the corresponding roaster should be deleted and a 204 should be returned.
+If no roaster can be found a 404 should be returned.
+
+### 4. All CRUD should happen on a local DB
+
+As a client of the API, I want the data I read from and write to, to be stored in a persistent way. For the time being a local Postgres DB will do.
+
+-> A local DB should be set up and a connection to it created within the application.
+All CRUD method should be refactored to be working with that local DB.
+
 ## Package
 
 ```

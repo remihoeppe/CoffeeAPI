@@ -1,10 +1,80 @@
-+***** REQUEST: GET: /roaster/covfefe *****
-GET /roaster/covfefe HTTP/1.1
+/***** REQUEST: DELETE: /roasters/covfefe *****
+#DELETE /roasters/covfefe HTTP/1.1
 
 
 
-2***** RESPONSE 404 to GET: /roaster/covfefe *****
-HTTP/1.1 404 Route not found
+6***** RESPONSE 404 to DELETE: /roasters/covfefe *****
+HTTP/1.1 404 Not Found
 
 
 
++***** REQUEST: GET: /roaster/covfefe *****
+GET /roaster/covfefe HTTP/1.1
+
+
+
+2***** RESPONSE 404 to GET: /roaster/covfefe *****
+HTTP/1.1 404 Route not found
+
+
+
+2***** REQUEST: DELETE: /roasters/grindsmith *****
+&DELETE /roasters/grindsmith HTTP/1.1
+
+
+
+9***** RESPONSE 204 to DELETE: /roasters/grindsmith *****
+HTTP/1.1 204 No Content
+
+
+
+%***** REQUEST: POST: /roasters *****
+POST /roasters HTTP/1.1
+
+
+S{"name":"Verve Coffee","url":"https://vervecoffee.com","address":"Santa Cruz, CA"}
+,***** RESPONSE 204 to POST: /roasters *****
+HTTP/1.1 204 No Content
+
+
+
+$***** REQUEST: GET: /roasters *****
+GET /roasters HTTP/1.1
+
+
+
++***** RESPONSE 200 to GET: /roasters *****
+HTTP/1.1 200 OK
+/content-type: application/json; charset=utf-8
+
+Ò{"roasters":[{"name":"Monmouth Coffee Company","url":"https://www.monmouthcoffee.co.uk/","address":"123 Street"},{"name":"Square Mile Coffee Roasters","url":"https://shop.squaremilecoffee.com/","address":"123 Street"},{"name":"Skylark Coffee","url":"https://skylark.coffee/","address":"123 Street"},{"name":"Grindsmith","url":"https://grindsmith.com/","address":"123 Street"},{"name":"Curve Coffee","url":"https://www.curveroasters.co.uk/","address":"123 Street"}]}
+***** REQUEST: GET: / *****
+GET / HTTP/1.1
+
+
+
+#***** RESPONSE 200 to GET: / *****
+HTTP/1.1 200 OK
+
+
+Coffee API
+%***** REQUEST: POST: /roasters *****
+POST /roasters HTTP/1.1
+
+
+"{"name":"","url":"","address":""}
+,***** RESPONSE 400 to POST: /roasters *****
+HTTP/1.1 400 Bad Request
+
+
+Invalid roaster data
+	/***** REQUEST: GET: /roasters/grindsmith *****
+	#GET /roasters/grindsmith HTTP/1.1
+	
+	
+	
+	6***** RESPONSE 200 to GET: /roasters/grindsmith *****
+	HTTP/1.1 200 OK
+	/content-type: application/json; charset=utf-8
+	
+	M{"name":"Grindsmith","url":"https://grindsmith.com/","address":"123 Street"}

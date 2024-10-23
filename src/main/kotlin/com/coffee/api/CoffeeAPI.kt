@@ -17,6 +17,8 @@ fun main() {
     coffeeAPI().asServer(SunHttp(port = 9000)).start()
 }
 
+
+
 val roastersLens = autoBody<Roasters>().toLens()
 val roasterLens = autoBody<Roaster>().toLens()
 
@@ -71,7 +73,6 @@ fun coffeeAPI(): HttpHandler {
                 Response(NOT_FOUND)
             }
         }
-
     ).withFilter(DebuggingFilters.PrintRequestAndResponse().then(ServerFilters.CatchAll()))
 }
 
