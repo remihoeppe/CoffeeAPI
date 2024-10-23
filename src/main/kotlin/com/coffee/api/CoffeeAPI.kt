@@ -2,7 +2,6 @@ package com.coffee.api
 import com.coffee.api.roaster.PostgresRoasterRepository
 import org.http4k.core.*
 import org.http4k.core.Method.GET
-import org.http4k.core.Status.Companion.BAD_REQUEST
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.NO_CONTENT
 import org.http4k.core.Status.Companion.OK
@@ -40,13 +39,6 @@ val roasterLens = autoBody<Roaster>().toLens()
 
 fun coffeeAPI(): HttpHandler {
     val repository = PostgresRoasterRepository();
-    var roasters = mutableListOf(
-        Roaster("Monmouth Coffee Company", "https://www.monmouthcoffee.co.uk/", "123 Street"),
-        Roaster("Square Mile Coffee Roasters", "https://shop.squaremilecoffee.com/", "123 Street"),
-        Roaster("Skylark Coffee", "https://skylark.coffee/", "123 Street"),
-        Roaster("Grindsmith", "https://grindsmith.com/", "123 Street"),
-        Roaster("Curve Coffee", "https://www.curveroasters.co.uk/", "123 Street"),
-    )
 
     return routes(
         "/" bind GET to {
@@ -84,9 +76,9 @@ fun coffeeAPI(): HttpHandler {
 
         "/roasters/{name}" bind Method.DELETE to { request ->
             val name = request.path("name")
-            val roaster = roasters.find { it.name.equals(name, ignoreCase = true) }
+            val roaster = repository.roasterByName("$name")
             if(roaster != null) {
-                roasters.remove(roaster)
+                repository.removeRoaster("$name")
                 Response(NO_CONTENT)
             } else {
                 Response(NOT_FOUND)
