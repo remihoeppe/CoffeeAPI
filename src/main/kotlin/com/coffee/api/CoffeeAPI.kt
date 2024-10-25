@@ -60,6 +60,16 @@ fun coffeeAPI(): HttpHandler {
             }
         },
 
+        "/roasters/byId/{id}" bind GET to { request ->
+            val id = request.path("id")
+            val roaster = repository.roasterById("$id")
+            if(roaster == null) {
+                Response(NOT_FOUND)
+            } else {
+                roasterLens.inject(roaster, Response(OK))
+            }
+        },
+
         "/roasters" bind Method.POST to { request ->
             runCatching {
                 val newRoaster = roasterLens.extract(request)

@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 interface RoasterRepository {
     fun allRoasters(): List<Roaster>
     fun roasterByName(name: String): Roaster?
+    fun roasterById(id: String): Roaster?
     fun addRoaster(newRoaster: Roaster)
     fun removeRoaster(name: String): Boolean
 }
@@ -21,6 +22,13 @@ class PostgresRoasterRepository : RoasterRepository {
         RoasterDAO.find { RoasterTable.name.lowerCase() eq name.lowercase() }
             .limit(1)
             .map(::daoToModel)
+            .firstOrNull()
+    }
+
+    override fun roasterById(id: String): Roaster? = transaction {
+        RoasterDAO.find { RoasterTable.id eq id.toInt() }
+            .limit(1)
+            .map (::daoToModel)
             .firstOrNull()
     }
 
@@ -51,6 +59,10 @@ class InternalMemoryRepository : RoasterRepository {
 
     override fun roasterByName(name: String) = roasters.find {
         it.name.equals(name, ignoreCase = true)
+    }
+
+    override fun roasterById(id: String): Roaster? {
+        TODO("Not yet implemented")
     }
 
     override fun addRoaster(newRoaster: Roaster) {
