@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">8</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.310s</div>
+<div class="counter">0.267s</div>
 <p>duration</p>
 </div>
 </td>
@@ -78,43 +78,8 @@
 </tr>
 </thead>
 <tr>
-<td class="success">API returns a list of roasters GET request()</td>
-<td class="success">0.016s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">API returns a specific roaster when GET requests contains a name parameter()</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">API should return 204 when valid name parameter sent through DELETE request()</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
 <td class="success">API should return 400 when invalid roaster data is sent()</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">API should return 404 when an invalid name is send through a GET request()</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">API should return 404 when invalid name param sent through DEL request()</td>
-<td class="success">0.024s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">API should return a 204 when valid data has been sent through a POST request()</td>
-<td class="success">0.262s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Testing server root endpoint()</td>
-<td class="success">0.001s</td>
+<td class="success">0.267s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -122,66 +87,14 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>***** REQUEST: DELETE: /roasters/covfefe *****
-DELETE /roasters/covfefe HTTP/1.1
-
-
-
-***** RESPONSE 404 to DELETE: /roasters/covfefe *****
-HTTP/1.1 404 Not Found
-
-
-
-***** REQUEST: GET: /roaster/covfefe *****
-GET /roaster/covfefe HTTP/1.1
-
-
-
-***** RESPONSE 404 to GET: /roaster/covfefe *****
-HTTP/1.1 404 Route not found
-
-
-
-***** REQUEST: DELETE: /roasters/grindsmith *****
-DELETE /roasters/grindsmith HTTP/1.1
-
-
-
-***** RESPONSE 204 to DELETE: /roasters/grindsmith *****
-HTTP/1.1 204 No Content
-
-
-
-***** REQUEST: POST: /roasters *****
-POST /roasters HTTP/1.1
-
-
-{&quot;name&quot;:&quot;Verve Coffee&quot;,&quot;url&quot;:&quot;https://vervecoffee.com&quot;,&quot;address&quot;:&quot;Santa Cruz, CA&quot;}
-***** RESPONSE 204 to POST: /roasters *****
-HTTP/1.1 204 No Content
-
-
-
-***** REQUEST: GET: /roasters *****
-GET /roasters HTTP/1.1
-
-
-
-***** RESPONSE 200 to GET: /roasters *****
-HTTP/1.1 200 OK
-content-type: application/json; charset=utf-8
-
-{&quot;roasters&quot;:[{&quot;name&quot;:&quot;Monmouth Coffee Company&quot;,&quot;url&quot;:&quot;https://www.monmouthcoffee.co.uk/&quot;,&quot;address&quot;:&quot;123 Street&quot;},{&quot;name&quot;:&quot;Square Mile Coffee Roasters&quot;,&quot;url&quot;:&quot;https://shop.squaremilecoffee.com/&quot;,&quot;address&quot;:&quot;123 Street&quot;},{&quot;name&quot;:&quot;Skylark Coffee&quot;,&quot;url&quot;:&quot;https://skylark.coffee/&quot;,&quot;address&quot;:&quot;123 Street&quot;},{&quot;name&quot;:&quot;Grindsmith&quot;,&quot;url&quot;:&quot;https://grindsmith.com/&quot;,&quot;address&quot;:&quot;123 Street&quot;},{&quot;name&quot;:&quot;Curve Coffee&quot;,&quot;url&quot;:&quot;https://www.curveroasters.co.uk/&quot;,&quot;address&quot;:&quot;123 Street&quot;}]}
-***** REQUEST: GET: / *****
-GET / HTTP/1.1
-
-
-
-***** RESPONSE 200 to GET: / *****
-HTTP/1.1 200 OK
-
-
-Coffee API
+<pre>10:29:48.198 [Test worker] DEBUG Exposed -- DROP TABLE IF EXISTS roaster
+10:29:48.212 [Test worker] DEBUG Exposed -- CREATE TABLE IF NOT EXISTS roaster (id SERIAL PRIMARY KEY, &quot;name&quot; VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL)
+10:29:48.226 [Test worker] DEBUG Exposed -- INSERT INTO roaster (&quot;name&quot;, url, address) VALUES ('Monmouth Coffee Company', 'https://www.monmouthcoffee.co.uk/', '123 Street')
+10:29:48.227 [Test worker] DEBUG Exposed -- INSERT INTO roaster (&quot;name&quot;, url, address) VALUES ('Square Mile Coffee Roasters', 'https://shop.squaremilecoffee.com/', '123 Street')
+10:29:48.228 [Test worker] DEBUG Exposed -- INSERT INTO roaster (&quot;name&quot;, url, address) VALUES ('Skylark Coffee', 'https://skylark.coffee/', '123 Street')
+10:29:48.229 [Test worker] DEBUG Exposed -- INSERT INTO roaster (&quot;name&quot;, url, address) VALUES ('Grindsmith', 'https://grindsmith.com/', '123 Street')
+10:29:48.230 [Test worker] DEBUG Exposed -- INSERT INTO roaster (&quot;name&quot;, url, address) VALUES ('Curve Coffee', 'https://www.curveroasters.co.uk/', '123 Street')
+Database prepared successfully
 ***** REQUEST: POST: /roasters *****
 POST /roasters HTTP/1.1
 
@@ -192,16 +105,6 @@ HTTP/1.1 400 Bad Request
 
 
 Invalid roaster data
-***** REQUEST: GET: /roasters/grindsmith *****
-GET /roasters/grindsmith HTTP/1.1
-
-
-
-***** RESPONSE 200 to GET: /roasters/grindsmith *****
-HTTP/1.1 200 OK
-content-type: application/json; charset=utf-8
-
-{&quot;name&quot;:&quot;Grindsmith&quot;,&quot;url&quot;:&quot;https://grindsmith.com/&quot;,&quot;address&quot;:&quot;123 Street&quot;}
 </pre>
 </span>
 </div>
@@ -213,7 +116,7 @@ content-type: application/json; charset=utf-8
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.8</a> at 22 Oct 2024, 10:53:08</p>
+<a href="http://www.gradle.org">Gradle 8.8</a> at 25 Oct 2024, 10:29:48</p>
 </div>
 </div>
 </body>

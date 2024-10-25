@@ -1,74 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.coffee.api.CoffeeAPITest" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-10-22T09:53:07" hostname="MacBook-Pro-3" time="0.322">
+<testsuite name="com.coffee.api.CoffeeAPITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-25T09:29:48" hostname="MacBook-Pro-3" time="0.267">
   <properties/>
-  <testcase name="API should return 404 when invalid name param sent through DEL request()" classname="com.coffee.api.CoffeeAPITest" time="0.024"/>
-  <testcase name="API should return 404 when an invalid name is send through a GET request()" classname="com.coffee.api.CoffeeAPITest" time="0.002"/>
-  <testcase name="API should return 204 when valid name parameter sent through DELETE request()" classname="com.coffee.api.CoffeeAPITest" time="0.002"/>
-  <testcase name="API should return a 204 when valid data has been sent through a POST request()" classname="com.coffee.api.CoffeeAPITest" time="0.262"/>
-  <testcase name="API returns a list of roasters GET request()" classname="com.coffee.api.CoffeeAPITest" time="0.016"/>
-  <testcase name="Testing server root endpoint()" classname="com.coffee.api.CoffeeAPITest" time="0.001"/>
-  <testcase name="API should return 400 when invalid roaster data is sent()" classname="com.coffee.api.CoffeeAPITest" time="0.002"/>
-  <testcase name="API returns a specific roaster when GET requests contains a name parameter()" classname="com.coffee.api.CoffeeAPITest" time="0.001"/>
-  <system-out><![CDATA[***** REQUEST: DELETE: /roasters/covfefe *****
-DELETE /roasters/covfefe HTTP/1.1
-
-
-
-***** RESPONSE 404 to DELETE: /roasters/covfefe *****
-HTTP/1.1 404 Not Found
-
-
-
-***** REQUEST: GET: /roaster/covfefe *****
-GET /roaster/covfefe HTTP/1.1
-
-
-
-***** RESPONSE 404 to GET: /roaster/covfefe *****
-HTTP/1.1 404 Route not found
-
-
-
-***** REQUEST: DELETE: /roasters/grindsmith *****
-DELETE /roasters/grindsmith HTTP/1.1
-
-
-
-***** RESPONSE 204 to DELETE: /roasters/grindsmith *****
-HTTP/1.1 204 No Content
-
-
-
-***** REQUEST: POST: /roasters *****
-POST /roasters HTTP/1.1
-
-
-{"name":"Verve Coffee","url":"https://vervecoffee.com","address":"Santa Cruz, CA"}
-***** RESPONSE 204 to POST: /roasters *****
-HTTP/1.1 204 No Content
-
-
-
-***** REQUEST: GET: /roasters *****
-GET /roasters HTTP/1.1
-
-
-
-***** RESPONSE 200 to GET: /roasters *****
-HTTP/1.1 200 OK
-content-type: application/json; charset=utf-8
-
-{"roasters":[{"name":"Monmouth Coffee Company","url":"https://www.monmouthcoffee.co.uk/","address":"123 Street"},{"name":"Square Mile Coffee Roasters","url":"https://shop.squaremilecoffee.com/","address":"123 Street"},{"name":"Skylark Coffee","url":"https://skylark.coffee/","address":"123 Street"},{"name":"Grindsmith","url":"https://grindsmith.com/","address":"123 Street"},{"name":"Curve Coffee","url":"https://www.curveroasters.co.uk/","address":"123 Street"}]}
-***** REQUEST: GET: / *****
-GET / HTTP/1.1
-
-
-
-***** RESPONSE 200 to GET: / *****
-HTTP/1.1 200 OK
-
-
-Coffee API
+  <testcase name="API should return 400 when invalid roaster data is sent()" classname="com.coffee.api.CoffeeAPITest" time="0.267"/>
+  <system-out><![CDATA[10:29:48.198 [Test worker] DEBUG Exposed -- DROP TABLE IF EXISTS roaster
+10:29:48.212 [Test worker] DEBUG Exposed -- CREATE TABLE IF NOT EXISTS roaster (id SERIAL PRIMARY KEY, "name" VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL)
+10:29:48.226 [Test worker] DEBUG Exposed -- INSERT INTO roaster ("name", url, address) VALUES ('Monmouth Coffee Company', 'https://www.monmouthcoffee.co.uk/', '123 Street')
+10:29:48.227 [Test worker] DEBUG Exposed -- INSERT INTO roaster ("name", url, address) VALUES ('Square Mile Coffee Roasters', 'https://shop.squaremilecoffee.com/', '123 Street')
+10:29:48.228 [Test worker] DEBUG Exposed -- INSERT INTO roaster ("name", url, address) VALUES ('Skylark Coffee', 'https://skylark.coffee/', '123 Street')
+10:29:48.229 [Test worker] DEBUG Exposed -- INSERT INTO roaster ("name", url, address) VALUES ('Grindsmith', 'https://grindsmith.com/', '123 Street')
+10:29:48.230 [Test worker] DEBUG Exposed -- INSERT INTO roaster ("name", url, address) VALUES ('Curve Coffee', 'https://www.curveroasters.co.uk/', '123 Street')
+Database prepared successfully
 ***** REQUEST: POST: /roasters *****
 POST /roasters HTTP/1.1
 
@@ -79,16 +20,6 @@ HTTP/1.1 400 Bad Request
 
 
 Invalid roaster data
-***** REQUEST: GET: /roasters/grindsmith *****
-GET /roasters/grindsmith HTTP/1.1
-
-
-
-***** RESPONSE 200 to GET: /roasters/grindsmith *****
-HTTP/1.1 200 OK
-content-type: application/json; charset=utf-8
-
-{"name":"Grindsmith","url":"https://grindsmith.com/","address":"123 Street"}
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,5 +1,6 @@
 package com.coffee.api
 
+import com.coffee.api.roaster.RoasterTable
 import org.http4k.core.Method.*
 import org.http4k.core.Request
 import org.http4k.core.Response
@@ -8,7 +9,14 @@ import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.NO_CONTENT
 import org.http4k.core.Status.Companion.OK
 import org.http4k.format.Moshi.json
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CoffeeAPITest {
@@ -40,13 +48,13 @@ class CoffeeAPITest {
 
     @Test
     fun `API returns a specific roaster when GET requests contains a name parameter`() {
-        val response = api(Request(GET, "/roasters/grindsmith"))
+        val response = api(Request(GET, "/roasters/byName/grindsmith"))
         assertEquals(grindSmithJson, response.bodyString())
     }
 
     @Test
     fun `API should return 404 when an invalid name is send through a GET request`() {
-        val response = api(Request(GET, "/roaster/covfefe"))
+        val response = api(Request(GET, "/roaster/byName/covfefe"))
         response.expectNotFound()
     }
 
@@ -73,7 +81,51 @@ class CoffeeAPITest {
     fun `API should return 404 when invalid name param sent through DEL request`() {
         api(Request(DELETE, "/roasters/covfefe")).expectNotFound()
     }
+    
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun dbConnect(): Unit {
+            Database.connect(
+                url = "jdbc:postgresql://localhost:5432/mycoffeeapp",
+                driver = "org.postgresql.Driver",
+                user = "remi",
+                password = "postgres",
+            )
+            transaction {
+                SchemaUtils.drop(RoasterTable)
+                SchemaUtils.create(RoasterTable)
+                RoasterTable.insert {
+                    it[name] = "Monmouth Coffee Company"
+                    it[url] = "https://www.monmouthcoffee.co.uk/"
+                    it[address] = "123 Street"
+                }
+                RoasterTable.insert {
+                    it[name] = "Square Mile Coffee Roasters"
+                    it[url] = "https://shop.squaremilecoffee.com/"
+                    it[address] = "123 Street"
+                }
+                RoasterTable.insert {
+                    it[name] = "Skylark Coffee"
+                    it[url] = "https://skylark.coffee/"
+                    it[address] = "123 Street"
+                }
+                RoasterTable.insert {
+                    it[name] = "Grindsmith"
+                    it[url] = "https://grindsmith.com/"
+                    it[address] = "123 Street"
+                }
+                RoasterTable.insert {
+                    it[name] = "Curve Coffee"
+                    it[url] = "https://www.curveroasters.co.uk/"
+                    it[address] = "123 Street"
+                }
+            }
+            println("Database prepared successfully")
+        }
+    }
 }
+
 
 private fun Response.expectOK(): Response {
     assertEquals(OK, this.status)
