@@ -53,6 +53,12 @@ class CoffeeAPITest {
     }
 
     @Test
+    fun `API returns a specific roaster when GET requests contains an ID parameter`() {
+        val response = api(Request(GET, "/roasters/byId/4"))
+        assertEquals(grindSmithJson, response.bodyString())
+    }
+
+    @Test
     fun `API should return 404 when an invalid name is send through a GET request`() {
         val response = api(Request(GET, "/roaster/byName/covfefe"))
         response.expectNotFound()
@@ -81,7 +87,7 @@ class CoffeeAPITest {
     fun `API should return 404 when invalid name param sent through DEL request`() {
         api(Request(DELETE, "/roasters/covfefe")).expectNotFound()
     }
-    
+
     companion object {
         @JvmStatic
         @BeforeAll
