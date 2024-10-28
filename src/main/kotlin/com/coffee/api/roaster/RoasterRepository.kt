@@ -16,23 +16,25 @@ interface RoasterRepository {
 }
 
 class PostgresRoasterRepository : RoasterRepository {
-    override fun allRoasters(): List<Roaster> = transaction { RoasterDAO.all().map(::daoToModel) }
+    override fun allRoasters(): List<Roaster> = dbTransaction { RoasterDAO.all().map(::daoToModel) }
 
-    override fun roasterByName(name: String): Roaster? = transaction {
-        RoasterDAO.find { RoasterTable.name.lowerCase() eq name.lowercase() }
+    override fun roasterByName(name: String): Roaster? =
+        dbTransaction {
+            RoasterDAO.find { RoasterTable.name.lowerCase() eq name.lowercase() }
+                .limit(1)
+                .map(::daoToModel)
+                .firstOrNull()
+        }
+
+
+    override fun roasterById(id: String): Roaster? = dbTransaction {
+        RoasterDAO.find { RoasterTable.id eq id.toInt() }
             .limit(1)
             .map(::daoToModel)
             .firstOrNull()
     }
 
-    override fun roasterById(id: String): Roaster? = transaction {
-        RoasterDAO.find { RoasterTable.id eq id.toInt() }
-            .limit(1)
-            .map (::daoToModel)
-            .firstOrNull()
-    }
-
-    override fun addRoaster(newRoaster: Roaster): Unit = transaction {
+    override fun addRoaster(newRoaster: Roaster): Unit = dbTransaction {
         RoasterDAO.new {
             name = newRoaster.name
             url = newRoaster.url
@@ -40,7 +42,7 @@ class PostgresRoasterRepository : RoasterRepository {
         }
     }
 
-    override fun removeRoaster(name: String): Boolean = transaction {
+    override fun removeRoaster(name: String): Boolean = dbTransaction {
         val rowsDeleted = RoasterTable.deleteWhere { RoasterTable.name.lowerCase() eq name.lowercase() }
         rowsDeleted == 1;
     }
