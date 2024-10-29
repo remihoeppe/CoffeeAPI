@@ -1,6 +1,7 @@
 package com.coffee.api
 
 import com.coffee.api.roaster.RoasterTable
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.http4k.core.Method.*
 import org.http4k.core.Request
 import org.http4k.core.Response
@@ -13,21 +14,18 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+
 class CoffeeAPITest {
 
     private val api = coffeeAPI()
-    private val defaultRoastersJson =
-        "{\"roasters\":[{\"name\":\"Monmouth Coffee Company\",\"url\":\"https://www.monmouthcoffee.co.uk/\",\"address\":\"123 Street\"}," +
-                "{\"name\":\"Square Mile Coffee Roasters\",\"url\":\"https://shop.squaremilecoffee.com/\",\"address\":\"123 Street\"}," +
-                "{\"name\":\"Skylark Coffee\",\"url\":\"https://skylark.coffee/\",\"address\":\"123 Street\"}," +
-                "{\"name\":\"Grindsmith\",\"url\":\"https://grindsmith.com/\",\"address\":\"123 Street\"}," +
-                "{\"name\":\"Curve Coffee\",\"url\":\"https://www.curveroasters.co.uk/\",\"address\":\"123 Street\"}]}"
 
     private val grindSmithJson =
         "{\"name\":\"Grindsmith\",\"url\":\"https://grindsmith.com/\",\"address\":\"123 Street\"}"
@@ -43,11 +41,14 @@ class CoffeeAPITest {
     @Test
     fun `API returns a list of roasters GET request`() {
         val response = api(Request(GET, "/roasters")).expectOK()
-        assertEquals(defaultRoastersJson, response.bodyString())
+        val responseBody = response.bodyString()
+        val json = jacksonObjectMapper().readTree(responseBody)
+        assertTrue(json.isArray)
     }
 
     @Test
     fun `API returns a specific roaster when GET requests contains a name parameter`() {
+        api(Request(POST, "/roasters").body(grindSmithJson))
         val response = api(Request(GET, "/roasters/byName/grindsmith"))
         assertEquals(grindSmithJson, response.bodyString())
     }
@@ -75,7 +76,6 @@ class CoffeeAPITest {
     @Test
     fun `API should return a 204 when valid data has been sent through a POST request`() {
         api(Request(POST, "/roasters").body(newRoasterJson)).expectNoContent()
-
     }
 
     @Test

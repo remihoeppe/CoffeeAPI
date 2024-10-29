@@ -72,6 +72,9 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
+    implementation("org.http4k:http4k-format-jackson:1.4.0")
+
+
 
 
 
