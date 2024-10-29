@@ -1,10 +1,8 @@
 package com.coffee.api.roaster
 
-import com.coffee.api.Roaster
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.lowerCase
-import org.jetbrains.exposed.sql.transactions.transaction
 
 
 interface RoasterRepository {

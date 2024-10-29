@@ -1,6 +1,7 @@
 package com.coffee.api
 
 import com.coffee.api.roaster.PostgresRoasterRepository
+import com.coffee.api.roaster.Roaster
 import org.http4k.core.*
 import org.http4k.core.Method.GET
 import org.http4k.core.Status.Companion.NOT_FOUND
@@ -21,6 +22,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 
 fun main() {
+
     Database.connect(
         url = "jdbc:postgresql://localhost:5432/mycoffeeapp",
         driver = "org.postgresql.Driver",
@@ -33,8 +35,7 @@ fun main() {
     coffeeAPI().asServer(SunHttp(port = 9000)).start()
 }
 
-
-val roastersLens = autoBody<Roasters>().toLens()
+val allRoastersLens = autoBody<List<Roaster>>().toLens()
 val roasterLens = autoBody<Roaster>().toLens()
 
 fun coffeeAPI(): HttpHandler {
@@ -46,8 +47,8 @@ fun coffeeAPI(): HttpHandler {
         },
 
         "/roasters" bind GET to {
-            val roastersList = Roasters(repository.allRoasters())
-            roastersLens.inject(roastersList, Response(OK))
+            val roastersList = repository.allRoasters()
+            allRoastersLens.inject(roastersList, Response(OK))
         },
 
         "/roasters/byName/{name}" bind GET to { request ->
@@ -100,7 +101,7 @@ fun coffeeAPI(): HttpHandler {
 
 // The name of the list variable in Roasters is going to be the name of the JSON array in the GET response
 data class Roasters(val roasters: List<Roaster> = emptyList())
-data class Roaster(val name: String, val url: String, val address: String)
+
 
 
 fun Roaster.isValid(): Boolean {
