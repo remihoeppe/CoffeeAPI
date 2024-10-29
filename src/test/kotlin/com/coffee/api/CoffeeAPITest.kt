@@ -1,5 +1,8 @@
 package com.coffee.api
 
+import com.coffee.api.coffee.Coffee
+import com.coffee.api.coffee.CoffeeTable
+import com.coffee.api.roaster.RoasterCoffeeTable
 import com.coffee.api.roaster.RoasterTable
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.http4k.core.Method.*
@@ -10,9 +13,11 @@ import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.NO_CONTENT
 import org.http4k.core.Status.Companion.OK
 import org.http4k.format.Moshi.json
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
@@ -89,6 +94,9 @@ class CoffeeAPITest {
     }
 
     companion object {
+
+        private var coffees = listOf(Coffee("Good Coffee"), Coffee("More Good Coffee"))
+
         @JvmStatic
         @BeforeAll
         fun dbConnect(): Unit {
@@ -99,33 +107,57 @@ class CoffeeAPITest {
                 password = "postgres",
             )
             transaction {
-                SchemaUtils.drop(RoasterTable)
-                SchemaUtils.create(RoasterTable)
-                RoasterTable.insert {
+                SchemaUtils.drop(RoasterTable, CoffeeTable, RoasterCoffeeTable)
+                SchemaUtils.create(RoasterTable, CoffeeTable, RoasterCoffeeTable)
+                val roaster1 = RoasterTable.insertAndGetId {
                     it[name] = "Monmouth Coffee Company"
                     it[url] = "https://www.monmouthcoffee.co.uk/"
                     it[address] = "123 Street"
                 }
-                RoasterTable.insert {
+
+                val roaster2 = RoasterTable.insertAndGetId {
                     it[name] = "Square Mile Coffee Roasters"
                     it[url] = "https://shop.squaremilecoffee.com/"
                     it[address] = "123 Street"
                 }
-                RoasterTable.insert {
+
+                val roaster3 = RoasterTable.insertAndGetId {
                     it[name] = "Skylark Coffee"
                     it[url] = "https://skylark.coffee/"
                     it[address] = "123 Street"
                 }
-                RoasterTable.insert {
-                    it[name] = "Grindsmith"
-                    it[url] = "https://grindsmith.com/"
-                    it[address] = "123 Street"
+                // Insert coffees and associate them with roasters
+                val coffeesForRoaster1 = listOf("Good Coffee", "Espresso Blend")
+                val coffeesForRoaster2 = listOf("House Blend", "French Roast")
+                val coffeesForRoaster3 = listOf("Organic Dark Roast", "Ethiopian Light Roast")
+
+                // Function to add coffees to a roaster
+                fun addCoffeesToRoaster(roasterId: EntityID<Int>, coffeeNames: List<String>) {
+                    coffeeNames.forEach { coffeeName ->
+                        val coffeeId = CoffeeTable.insertAndGetId { it[name] = coffeeName }
+                        RoasterCoffeeTable.insert {
+                            it[roaster] = roasterId
+                            it[coffee] = coffeeId
+                        }
+                    }
                 }
-                RoasterTable.insert {
-                    it[name] = "Curve Coffee"
-                    it[url] = "https://www.curveroasters.co.uk/"
-                    it[address] = "123 Street"
-                }
+                // Associate coffees with each roaster
+                addCoffeesToRoaster(roaster1, coffeesForRoaster1)
+                addCoffeesToRoaster(roaster2, coffeesForRoaster2)
+                addCoffeesToRoaster(roaster3, coffeesForRoaster3)
+
+
+
+//                RoasterTable.insert {
+//                    it[name] = "Grindsmith"
+//                    it[url] = "https://grindsmith.com/"
+//                    it[address] = "123 Street"
+//                }
+//                RoasterTable.insert {
+//                    it[name] = "Curve Coffee"
+//                    it[url] = "https://www.curveroasters.co.uk/"
+//                    it[address] = "123 Street"
+//                }
             }
             println("Database prepared successfully")
         }

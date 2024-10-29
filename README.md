@@ -40,6 +40,33 @@ As a client of the API, I want the data I read from and write to, to be stored i
 -> A local DB should be set up and a connection to it created within the application.
 All CRUD method should be refactored to be working with that local DB.
 
+## File Structure 
+
+src
+└── main
+    └── kotlin
+        └── com
+        └── coffee
+            └── api
+                ├── roaster
+                    │   ├── RoasterTable.kt          // Defines RoasterTable, RoasterCoffeeTable
+                    │   ├── RoasterDAO.kt            // RoasterDAO class with relationships
+                    │   ├── RoasterService.kt        // Business logic for roasters
+                    │   ├── RoasterController.kt     // API endpoints for roasters
+                    │   ├── Roaster.kt               // Roaster data model
+                    │   └── RoasterMapper.kt         // Mapping functions (like daoToModel)
+                    ├── coffee
+                    │   ├── CoffeeTable.kt           // Defines CoffeeTable
+                    │   ├── CoffeeDAO.kt             // CoffeeDAO class
+                    │   ├── CoffeeService.kt         // Business logic for coffees
+                    │   ├── CoffeeController.kt      // API endpoints for coffees
+                    │   └── Coffee.kt                // Coffee data model
+                    └── utils
+                        ├── DbTransaction.kt         // Database transaction helper
+                        └── Mappings.kt              // Any shared mapping logic
+
+
+
 ## Package
 
 ```

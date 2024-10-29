@@ -1,3 +1,5 @@
 package com.coffee.api.roaster
 
-data class Roaster(val name: String, val url: String, val address: String)
+import com.coffee.api.coffee.Coffee
+
+data class Roaster(val name: String, val url: String, val address: String, val coffees: List<Coffee>)
