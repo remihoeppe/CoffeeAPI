@@ -98,12 +98,6 @@ fun coffeeAPI(): HttpHandler {
     ).withFilter(DebuggingFilters.PrintRequestAndResponse().then(ServerFilters.CatchAll()))
 }
 
-
-// The name of the list variable in Roasters is going to be the name of the JSON array in the GET response
-data class Roasters(val roasters: List<Roaster> = emptyList())
-
-
-
 fun Roaster.isValid(): Boolean {
     val (name, url, address) = this
     return name.isNotEmpty() && url.isNotEmpty() && address.isNotEmpty()
