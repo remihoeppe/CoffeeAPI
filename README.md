@@ -65,7 +65,11 @@ src
                         ├── DbTransaction.kt         // Database transaction helper
                         └── Mappings.kt              // Any shared mapping logic
 
+## Qs: 
 
+- Am I using lenses properly?
+- Is the file structure adequate?
+- 
 
 ## Package
 

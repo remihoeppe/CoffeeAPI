@@ -5,13 +5,13 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.lowerCase
 
 class PostgresRoasterRepository : RoasterRepository {
-    override fun allRoasters(): List<Roaster> = dbTransaction { RoasterDAO.all().map(::daoToModel) }
+    override fun allRoasters(): List<Roaster> = dbTransaction { RoasterDAO.all().map(::roasterDAOToModel) }
 
     override fun roasterByName(name: String): Roaster? =
         dbTransaction {
             RoasterDAO.find { RoasterTable.name.lowerCase() eq name.lowercase() }
                 .limit(1)
-                .map(::daoToModel)
+                .map(::roasterDAOToModel)
                 .firstOrNull()
         }
 
@@ -19,7 +19,7 @@ class PostgresRoasterRepository : RoasterRepository {
     override fun roasterById(id: String): Roaster? = dbTransaction {
         RoasterDAO.find { RoasterTable.id eq id.toInt() }
             .limit(1)
-            .map(::daoToModel)
+            .map(::roasterDAOToModel)
             .firstOrNull()
     }
 
