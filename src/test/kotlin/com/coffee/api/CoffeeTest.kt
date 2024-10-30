@@ -1,6 +1,7 @@
 package com.coffee.api
 
 
+import com.coffee.api.TestUtils.expectBadRequest
 import com.coffee.api.TestUtils.expectCreated
 import org.http4k.core.Method
 import org.http4k.core.Request
@@ -21,6 +22,7 @@ class CoffeeTest {
     private val api = coffeeAPI()
 
     private val newCoffee = "{\"coffeeName\":\"Colombian Single Origin\",\"roastedBy\":\"Monmouth Coffee Company\"}"
+    private val invalidNewCoffee = "{\"coffeeName\":\"Colombian Single Origin\",\"roastedBy\":\"My Coffee Company\"}"
 
     @Test
     fun `API returns a list of Coffees on GET request for root endpoint`() {
@@ -67,6 +69,7 @@ class CoffeeTest {
 
     @Test
     fun `API returns 400 on POST request with invalid data`() {
+        api(Request(Method.POST, "/coffees").body(invalidNewCoffee)).expectBadRequest()
 
     }
 

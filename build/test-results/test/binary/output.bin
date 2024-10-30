@@ -2,12 +2,10 @@
 POST /coffees HTTP/1.1
 
 
-O{"coffeeName":"Colombian Single Origin","roastedBy":"Monmouth Coffee Company"}
-ª15:55:33.086 [Test worker] DEBUG Exposed -- SELECT roaster.id, roaster."name", roaster.url, roaster.address FROM roaster WHERE roaster."name" = 'Monmouth Coffee Company'
-k15:55:33.157 [Test worker] DEBUG Exposed -- INSERT INTO coffee ("name") VALUES ('Colombian Single Origin')
-l15:55:33.160 [Test worker] DEBUG Exposed -- INSERT INTO roastercoffee (roaster_id, coffee_id) VALUES (1, 8)
-+***** RESPONSE 201 to POST: /coffees *****
-!New coffee created! 201 Created
+I{"coffeeName":"Colombian Single Origin","roastedBy":"My Coffee Company"}
+¤15:58:11.867 [Test worker] DEBUG Exposed -- SELECT roaster.id, roaster."name", roaster.url, roaster.address FROM roaster WHERE roaster."name" = 'My Coffee Company'
++***** RESPONSE 400 to POST: /coffees *****
+#Roaster not found 400 Bad Request
 
 
 

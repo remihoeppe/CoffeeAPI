@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.coffee.api.CoffeeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-30T15:55:32" hostname="MacBook-Pro-3" time="0.501">
+<testsuite name="com.coffee.api.CoffeeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-30T15:58:11" hostname="MacBook-Pro-3" time="0.427">
   <properties/>
-  <testcase name="API returns 201 on POST request with valid data()" classname="com.coffee.api.CoffeeTest" time="0.501"/>
+  <testcase name="API returns 400 on POST request with invalid data()" classname="com.coffee.api.CoffeeTest" time="0.427"/>
   <system-out><![CDATA[***** REQUEST: POST: /coffees *****
 POST /coffees HTTP/1.1
 
 
-{"coffeeName":"Colombian Single Origin","roastedBy":"Monmouth Coffee Company"}
-15:55:33.086 [Test worker] DEBUG Exposed -- SELECT roaster.id, roaster."name", roaster.url, roaster.address FROM roaster WHERE roaster."name" = 'Monmouth Coffee Company'
-15:55:33.157 [Test worker] DEBUG Exposed -- INSERT INTO coffee ("name") VALUES ('Colombian Single Origin')
-15:55:33.160 [Test worker] DEBUG Exposed -- INSERT INTO roastercoffee (roaster_id, coffee_id) VALUES (1, 8)
-***** RESPONSE 201 to POST: /coffees *****
-New coffee created! 201 Created
+{"coffeeName":"Colombian Single Origin","roastedBy":"My Coffee Company"}
+15:58:11.867 [Test worker] DEBUG Exposed -- SELECT roaster.id, roaster."name", roaster.url, roaster.address FROM roaster WHERE roaster."name" = 'My Coffee Company'
+***** RESPONSE 400 to POST: /coffees *****
+Roaster not found 400 Bad Request
 
 
 
