@@ -1,10 +1,11 @@
-****** REQUEST: GET: /coffees/byId/2 *****
-GET /coffees/byId/2 HTTP/1.1
+****** REQUEST: GET: /coffees/byId/0 *****
+GET /coffees/byId/0 HTTP/1.1
 
 
 
-1***** RESPONSE 404 to GET: /coffees/byId/2 *****
-HTTP/1.1 404 Route not found
+ç15:39:04.139 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee.id = 0
+1***** RESPONSE 404 to GET: /coffees/byId/0 *****
+HTTP/1.1 404 Not Found
 
 
 

@@ -30,46 +30,49 @@ supply, at the very least, a valid roaster name and website URL.
 
 As a client of the API, I should be able to delete a roaster from the API DB.
 
--> When a client sends a DELETE request to `/roasters/{name}`, the corresponding roaster should be deleted and a 204 should be returned.
+-> When a client sends a DELETE request to `/roasters/{name}`, the corresponding roaster should be deleted and a 204
+should be returned.
 If no roaster can be found a 404 should be returned.
 
 ### 4. All CRUD should happen on a local DB
 
-As a client of the API, I want the data I read from and write to, to be stored in a persistent way. For the time being a local Postgres DB will do.
+As a client of the API, I want the data I read from and write to, to be stored in a persistent way. For the time being a
+local Postgres DB will do.
 
 -> A local DB should be set up and a connection to it created within the application.
 All CRUD method should be refactored to be working with that local DB.
 
-## File Structure 
+## File Structure
 
 src
 └── main
-    └── kotlin
-        └── com
-        └── coffee
-            └── api
-                ├── roaster
-                    │   ├── RoasterTable.kt          // Defines RoasterTable, RoasterCoffeeTable
-                    │   ├── RoasterDAO.kt            // RoasterDAO class with relationships
-                    │   ├── RoasterService.kt        // Business logic for roasters
-                    │   ├── RoasterController.kt     // API endpoints for roasters
-                    │   ├── Roaster.kt               // Roaster data model
-                    │   └── RoasterMapper.kt         // Mapping functions (like daoToModel)
-                    ├── coffee
-                    │   ├── CoffeeTable.kt           // Defines CoffeeTable
-                    │   ├── CoffeeDAO.kt             // CoffeeDAO class
-                    │   ├── CoffeeService.kt         // Business logic for coffees
-                    │   ├── CoffeeController.kt      // API endpoints for coffees
-                    │   └── Coffee.kt                // Coffee data model
-                    └── utils
-                        ├── DbTransaction.kt         // Database transaction helper
-                        └── Mappings.kt              // Any shared mapping logic
+└── kotlin
+└── com
+└── coffee
+└── api
+├── roaster
+│ ├── RoasterTable.kt // Defines RoasterTable, RoasterCoffeeTable
+│ ├── RoasterDAO.kt // RoasterDAO class with relationships
+│ ├── RoasterService.kt // Business logic for roasters
+│ ├── RoasterController.kt // API endpoints for roasters
+│ ├── Roaster.kt // Roaster data model
+│ └── RoasterMapper.kt // Mapping functions (like daoToModel)
+├── coffee
+│ ├── CoffeeTable.kt // Defines CoffeeTable
+│ ├── CoffeeDAO.kt // CoffeeDAO class
+│ ├── CoffeeService.kt // Business logic for coffees
+│ ├── CoffeeController.kt // API endpoints for coffees
+│ └── Coffee.kt // Coffee data model
+└── utils
+├── DbTransaction.kt // Database transaction helper
+└── Mappings.kt // Any shared mapping logic
 
-## Qs: 
+## Qs:
 
 - Am I using lenses properly?
 - Is the file structure adequate?
-- 
+- What is the best way to handle missing params as such? Or should they be considered as invalid params? 404 or 400?
+- Should there be one setup file with DB manips ran beforeAll tests?
 
 ## Package
 

@@ -22,5 +22,19 @@ class CoffeeService {
         }
     }
 
-    
+    fun getCoffeeWithRoasterById(id: Int): CoffeeWithRoaster? {
+        return transaction {
+            // Join CoffeeTable, RoasterCoffeeTable, and RoasterTable to find the roaster for the given coffee name
+            (CoffeeTable innerJoin RoasterCoffeeTable innerJoin RoasterTable)
+                .selectAll().where { CoffeeTable.id eq id }
+                .mapNotNull { row ->
+                    CoffeeWithRoaster(
+                        coffeeName = row[CoffeeTable.name],
+                        roastedBy = row[RoasterTable.name],
+                    )
+                }
+                .firstOrNull()
+        }
+    }
+
 }

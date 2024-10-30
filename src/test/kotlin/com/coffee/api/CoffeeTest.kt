@@ -46,12 +46,14 @@ class CoffeeTest {
 
     @Test
     fun `API returns 404 when an invalid name param is sent on GET request`() {
-
+        val response = api(Request(Method.GET, "/coffees/byName/covfefe"))
+        response.expectNotFound()
     }
 
     @Test
     fun `API returns 404 when an invalid ID param is sent on GET request`() {
-
+        val response = api(Request(Method.GET, "/coffees/byId/0"))
+        response.expectNotFound()
     }
 
     @Test

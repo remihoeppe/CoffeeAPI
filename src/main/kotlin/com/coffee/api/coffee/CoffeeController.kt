@@ -28,6 +28,16 @@ fun coffeeRoutes(repository: CoffeeRepository, service: CoffeeService): RoutingH
                 coffeeWithRoaster,
                 Response(Status.OK)
             )
+        },
+
+        "/coffees/byId/{id}" bind Method.GET to { request ->
+            val id = request.path("id")?.toInt()
+            val coffeeWithRoaster = id?.let { service.getCoffeeWithRoasterById(it) }
+            if (coffeeWithRoaster == null) Response(Status.NOT_FOUND)
+            else coffeeWithRoasterLens.inject(
+                coffeeWithRoaster,
+                Response(Status.OK)
+            )
         }
 
 
