@@ -7,18 +7,25 @@ import org.junit.jupiter.api.Test
 import com.coffee.api.TestUtils.expectNoContent
 import com.coffee.api.TestUtils.expectNotFound
 import com.coffee.api.TestUtils.expectOK
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.jetbrains.exposed.sql.Database
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeAll
 
 class CoffeeTest {
     private val api = coffeeAPI()
 
     @Test
     fun `API returns a list of Coffees on GET request for root endpoint`() {
-        api(Request(Method.GET, "/coffees")).expectOK()
+        val response = api(Request(Method.GET, "/coffees")).expectOK()
+        val responseBody = response.bodyString()
+        val json = jacksonObjectMapper().readTree(responseBody)
+        assertTrue(json.isArray)
     }
 
     @Test
     fun `API returns the right coffee when a name parameter is send on GET requests`() {
-
+        api(Request(Method.GET, "/coffees/byName/Good Coffee")).expectOK()
     }
 
     @Test
@@ -64,6 +71,19 @@ class CoffeeTest {
     @Test
     fun `API returns 404 when invalid ID param given on GET Coffees request`() {
 
+    }
+
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun dbConnect(): Unit {
+            Database.connect(
+                url = "jdbc:postgresql://localhost:5432/mycoffeeapp",
+                driver = "org.postgresql.Driver",
+                user = "remi",
+                password = "postgres",
+            )
+        }
     }
 
 }
