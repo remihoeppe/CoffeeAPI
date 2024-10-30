@@ -1,5 +1,7 @@
 package com.coffee.api
 
+import com.coffee.api.coffee.PostgresCoffeeRepository
+import com.coffee.api.coffee.coffeeRoutes
 import com.coffee.api.roaster.PostgresRoasterRepository
 import com.coffee.api.roaster.Roaster
 import com.coffee.api.roaster.roasterRoutes
@@ -36,17 +38,16 @@ fun main() {
     coffeeAPI().asServer(SunHttp(port = 9000)).start()
 }
 
-val allRoastersLens = autoBody<List<Roaster>>().toLens()
-val roasterLens = autoBody<Roaster>().toLens()
+
 
 
 fun coffeeAPI(): HttpHandler {
     val roasterRepository = PostgresRoasterRepository()
-//    val coffeeService = CoffeeService() // Replace with your actual service
+    val coffeeRepository = PostgresCoffeeRepository() // Replace with your actual service
 
     return routes(
         "/" bind Method.GET to { Response(Status.OK).body("Coffee API") },
         roasterRoutes(roasterRepository),
-//        coffeeRoutes(coffeeService)
+        coffeeRoutes(coffeeRepository)
     ).withFilter(DebuggingFilters.PrintRequestAndResponse().then(ServerFilters.CatchAll()))
 }

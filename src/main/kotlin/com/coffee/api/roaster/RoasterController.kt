@@ -1,14 +1,16 @@
 package com.coffee.api.roaster
 
-import com.coffee.api.roasterLens
-import com.coffee.api.allRoastersLens
 import org.http4k.core.*
+import org.http4k.format.Moshi.autoBody
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
 import org.http4k.routing.path
 import org.http4k.routing.routes
 
 fun roasterRoutes(repository: PostgresRoasterRepository): RoutingHttpHandler {
+    val allRoastersLens = autoBody<List<Roaster>>().toLens()
+    val roasterLens = autoBody<Roaster>().toLens()
+
     return routes(
         "/roasters" bind Method.GET to {
             val roastersList = repository.allRoasters()
