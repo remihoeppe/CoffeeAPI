@@ -3,9 +3,9 @@
 
 
 
-÷13:52:33.016 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee."name" = 'Good Coffee'
+÷15:26:14.277 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee."name" = 'Good Coffee'
 =***** RESPONSE 200 to GET: /coffees/byName/Good Coffee *****
 HTTP/1.1 200 OK
 /content-type: application/json; charset=utf-8
 
-E{"coffeeName":"Good Coffee","roasterName":"Monmouth Coffee Company"}
+C{"coffeeName":"Good Coffee","roastedBy":"Monmouth Coffee Company"}

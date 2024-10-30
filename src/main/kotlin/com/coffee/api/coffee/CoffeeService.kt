@@ -15,7 +15,7 @@ class CoffeeService {
                 .mapNotNull { row ->
                     CoffeeWithRoaster(
                         coffeeName = row[CoffeeTable.name],
-                        roasterName = row[RoasterTable.name],
+                        roastedBy = row[RoasterTable.name],
                     )
                 }
                 .firstOrNull()

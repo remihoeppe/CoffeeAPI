@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.coffee.api.CoffeeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-30T13:52:32" hostname="MacBook-Pro-3" time="0.488">
+<testsuite name="com.coffee.api.CoffeeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-30T15:26:13" hostname="MacBook-Pro-3" time="0.648">
   <properties/>
-  <testcase name="API returns the right coffee when a name parameter is send on GET requests()" classname="com.coffee.api.CoffeeTest" time="0.488"/>
+  <testcase name="API returns the right coffee when a name parameter is send on GET requests()" classname="com.coffee.api.CoffeeTest" time="0.648"/>
   <system-out><![CDATA[***** REQUEST: GET: /coffees/byName/Good Coffee *****
 GET /coffees/byName/Good Coffee HTTP/1.1
 
 
 
-13:52:33.016 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee."name" = 'Good Coffee'
+15:26:14.277 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee."name" = 'Good Coffee'
 ***** RESPONSE 200 to GET: /coffees/byName/Good Coffee *****
 HTTP/1.1 200 OK
 content-type: application/json; charset=utf-8
 
-{"coffeeName":"Good Coffee","roasterName":"Monmouth Coffee Company"}
+{"coffeeName":"Good Coffee","roastedBy":"Monmouth Coffee Company"}
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

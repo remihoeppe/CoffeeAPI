@@ -4,5 +4,5 @@ data class Coffee(val name: String)
 
 data class CoffeeWithRoaster(
     val coffeeName: String,
-    val roasterName: String
+    val roastedBy: String
 )

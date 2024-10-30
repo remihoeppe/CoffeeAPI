@@ -7,8 +7,11 @@ import org.junit.jupiter.api.Test
 import com.coffee.api.TestUtils.expectNoContent
 import com.coffee.api.TestUtils.expectNotFound
 import com.coffee.api.TestUtils.expectOK
+import com.coffee.api.coffee.CoffeeWithRoaster
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.jetbrains.exposed.sql.Database
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 
@@ -25,7 +28,11 @@ class CoffeeTest {
 
     @Test
     fun `API returns the right coffee when a name parameter is send on GET requests`() {
-        api(Request(Method.GET, "/coffees/byName/Good Coffee")).expectOK()
+        val response = api(Request(Method.GET, "/coffees/byName/Good Coffee")).expectOK()
+        val responseBody = response.bodyString()
+        val coffeeWithRoaster: CoffeeWithRoaster = jacksonObjectMapper().readValue(responseBody)
+        assertEquals("Good Coffee", coffeeWithRoaster.coffeeName)
+        assertEquals("Monmouth Coffee Company", coffeeWithRoaster.roastedBy)
     }
 
     @Test
