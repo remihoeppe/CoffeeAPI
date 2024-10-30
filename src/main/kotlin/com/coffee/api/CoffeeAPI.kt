@@ -2,6 +2,7 @@ package com.coffee.api
 
 import com.coffee.api.roaster.PostgresRoasterRepository
 import com.coffee.api.roaster.Roaster
+import com.coffee.api.roaster.roasterRoutes
 import org.http4k.core.*
 import org.http4k.core.Method.GET
 import org.http4k.core.Status.Companion.NOT_FOUND
@@ -38,67 +39,14 @@ fun main() {
 val allRoastersLens = autoBody<List<Roaster>>().toLens()
 val roasterLens = autoBody<Roaster>().toLens()
 
+
 fun coffeeAPI(): HttpHandler {
-    val repository = PostgresRoasterRepository();
+    val roasterRepository = PostgresRoasterRepository()
+//    val coffeeService = CoffeeService() // Replace with your actual service
 
     return routes(
-        "/" bind GET to {
-            Response(OK).body("Coffee API")
-        },
-
-        "/roasters" bind GET to {
-            val roastersList = repository.allRoasters()
-            allRoastersLens.inject(roastersList, Response(OK))
-        },
-
-        "/roasters/byName/{name}" bind GET to { request ->
-            val name = request.path("name")
-            val roaster = repository.roasterByName("$name")
-            if (roaster == null) {
-                Response(NOT_FOUND)
-            } else {
-                roasterLens.inject(roaster, Response(OK))
-            }
-        },
-
-        "/roasters/byId/{id}" bind GET to { request ->
-            val id = request.path("id")
-            val roaster = repository.roasterById("$id")
-            if(roaster == null) {
-                Response(NOT_FOUND)
-            } else {
-                roasterLens.inject(roaster, Response(OK))
-            }
-        },
-
-        "/roasters" bind Method.POST to { request ->
-            runCatching {
-                val newRoaster = roasterLens.extract(request)
-                if (newRoaster.isValid()) {
-                    repository.addRoaster(newRoaster)
-                    Response(NO_CONTENT)
-                } else {
-                    Response(Status.BAD_REQUEST).body("Invalid roaster data")
-                }
-            }.getOrElse {
-                Response(Status.BAD_REQUEST).body("Invalid Data")
-            }
-        },
-
-        "/roasters/{name}" bind Method.DELETE to { request ->
-            val name = request.path("name")
-            val roaster = repository.roasterByName("$name")
-            if (roaster != null) {
-                repository.removeRoaster("$name")
-                Response(NO_CONTENT)
-            } else {
-                Response(NOT_FOUND)
-            }
-        }
+        "/" bind Method.GET to { Response(Status.OK).body("Coffee API") },
+        roasterRoutes(roasterRepository),
+//        coffeeRoutes(coffeeService)
     ).withFilter(DebuggingFilters.PrintRequestAndResponse().then(ServerFilters.CatchAll()))
-}
-
-fun Roaster.isValid(): Boolean {
-    val (name, url, address) = this
-    return name.isNotEmpty() && url.isNotEmpty() && address.isNotEmpty()
 }
