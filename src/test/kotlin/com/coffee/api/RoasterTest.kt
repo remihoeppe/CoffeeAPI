@@ -1,5 +1,8 @@
 package com.coffee.api
 
+import com.coffee.api.TestUtils.expectNoContent
+import com.coffee.api.TestUtils.expectNotFound
+import com.coffee.api.TestUtils.expectOK
 import com.coffee.api.coffee.Coffee
 import com.coffee.api.coffee.CoffeeTable
 import com.coffee.api.roaster.RoasterCoffeeTable
@@ -7,28 +10,19 @@ import com.coffee.api.roaster.RoasterTable
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.http4k.core.Method.*
 import org.http4k.core.Request
-import org.http4k.core.Response
 import org.http4k.core.Status
-import org.http4k.core.Status.Companion.NOT_FOUND
-import org.http4k.core.Status.Companion.NO_CONTENT
-import org.http4k.core.Status.Companion.OK
-import org.http4k.format.Moshi.json
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-
-class CoffeeAPITest {
+class RoasterTest {
 
     private val api = coffeeAPI()
 
@@ -145,37 +139,8 @@ class CoffeeAPITest {
                 addCoffeesToRoaster(roaster1, coffeesForRoaster1)
                 addCoffeesToRoaster(roaster2, coffeesForRoaster2)
                 addCoffeesToRoaster(roaster3, coffeesForRoaster3)
-
-
-
-//                RoasterTable.insert {
-//                    it[name] = "Grindsmith"
-//                    it[url] = "https://grindsmith.com/"
-//                    it[address] = "123 Street"
-//                }
-//                RoasterTable.insert {
-//                    it[name] = "Curve Coffee"
-//                    it[url] = "https://www.curveroasters.co.uk/"
-//                    it[address] = "123 Street"
-//                }
             }
             println("Database prepared successfully")
         }
     }
-}
-
-
-private fun Response.expectOK(): Response {
-    assertEquals(OK, this.status)
-    return this
-}
-
-private fun Response.expectNoContent(): Response {
-    assertEquals(NO_CONTENT, this.status)
-    return this
-}
-
-private fun Response.expectNotFound(): Response {
-    assertEquals(NOT_FOUND, this.status)
-    return this
 }
