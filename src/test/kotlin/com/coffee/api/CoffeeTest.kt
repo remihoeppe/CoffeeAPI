@@ -37,7 +37,11 @@ class CoffeeTest {
 
     @Test
     fun `API returns the right coffee when an ID parameter is sent on a GET request`() {
-
+        val response = api(Request(Method.GET, "/coffees/byId/2")).expectOK()
+        val responseBody = response.bodyString()
+        val coffeeWithRoaster: CoffeeWithRoaster = jacksonObjectMapper().readValue(responseBody)
+        assertEquals("Espresso Blend", coffeeWithRoaster.coffeeName)
+        assertEquals("Monmouth Coffee Company", coffeeWithRoaster.roastedBy)
     }
 
     @Test

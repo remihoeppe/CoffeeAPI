@@ -1,11 +1,10 @@
-6***** REQUEST: GET: /coffees/byName/Good Coffee *****
-*GET /coffees/byName/Good Coffee HTTP/1.1
+****** REQUEST: GET: /coffees/byId/2 *****
+GET /coffees/byId/2 HTTP/1.1
 
 
 
-÷15:26:14.277 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee."name" = 'Good Coffee'
-=***** RESPONSE 200 to GET: /coffees/byName/Good Coffee *****
-HTTP/1.1 200 OK
-/content-type: application/json; charset=utf-8
+1***** RESPONSE 404 to GET: /coffees/byId/2 *****
+HTTP/1.1 404 Route not found
 
-C{"coffeeName":"Good Coffee","roastedBy":"Monmouth Coffee Company"}
+
+
