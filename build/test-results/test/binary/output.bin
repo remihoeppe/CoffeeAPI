@@ -1,11 +1,13 @@
-****** REQUEST: GET: /coffees/byId/0 *****
-GET /coffees/byId/0 HTTP/1.1
+$***** REQUEST: POST: /coffees *****
+POST /coffees HTTP/1.1
 
 
-
-ç15:39:04.139 [Test worker] DEBUG Exposed -- SELECT coffee.id, coffee."name", roastercoffee.id, roastercoffee.roaster_id, roastercoffee.coffee_id, roaster.id, roaster."name", roaster.url, roaster.address FROM coffee INNER JOIN roastercoffee ON coffee.id = roastercoffee.coffee_id INNER JOIN roaster ON roaster.id = roastercoffee.roaster_id WHERE coffee.id = 0
-1***** RESPONSE 404 to GET: /coffees/byId/0 *****
-HTTP/1.1 404 Not Found
+O{"coffeeName":"Colombian Single Origin","roastedBy":"Monmouth Coffee Company"}
+ª15:55:33.086 [Test worker] DEBUG Exposed -- SELECT roaster.id, roaster."name", roaster.url, roaster.address FROM roaster WHERE roaster."name" = 'Monmouth Coffee Company'
+k15:55:33.157 [Test worker] DEBUG Exposed -- INSERT INTO coffee ("name") VALUES ('Colombian Single Origin')
+l15:55:33.160 [Test worker] DEBUG Exposed -- INSERT INTO roastercoffee (roaster_id, coffee_id) VALUES (1, 8)
++***** RESPONSE 201 to POST: /coffees *****
+!New coffee created! 201 Created
 
 
 

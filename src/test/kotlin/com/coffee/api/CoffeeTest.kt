@@ -1,6 +1,7 @@
 package com.coffee.api
 
 
+import com.coffee.api.TestUtils.expectCreated
 import org.http4k.core.Method
 import org.http4k.core.Request
 import org.junit.jupiter.api.Test
@@ -15,8 +16,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 
+
 class CoffeeTest {
     private val api = coffeeAPI()
+
+    private val newCoffee = "{\"coffeeName\":\"Colombian Single Origin\",\"roastedBy\":\"Monmouth Coffee Company\"}"
 
     @Test
     fun `API returns a list of Coffees on GET request for root endpoint`() {
@@ -58,7 +62,7 @@ class CoffeeTest {
 
     @Test
     fun `API returns 201 on POST request with valid data`() {
-
+        api(Request(Method.POST, "/coffees").body(newCoffee)).expectCreated()
     }
 
     @Test

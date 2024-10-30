@@ -1,6 +1,7 @@
 package com.coffee.api
 
 import org.http4k.core.Response
+import org.http4k.core.Status.Companion.CREATED
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.NO_CONTENT
 import org.http4k.core.Status.Companion.OK
@@ -19,6 +20,11 @@ object TestUtils {
 
     fun Response.expectNotFound(): Response {
         assertEquals(NOT_FOUND, this.status)
+        return this
+    }
+
+    fun Response.expectCreated(): Response {
+        assertEquals(CREATED, this.status)
         return this
     }
 }

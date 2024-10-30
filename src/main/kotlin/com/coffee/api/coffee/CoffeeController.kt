@@ -13,11 +13,22 @@ fun coffeeRoutes(repository: CoffeeRepository, service: CoffeeService): RoutingH
 
     val allCoffeesLens = autoBody<List<Coffee>>().toLens()
     val coffeeWithRoasterLens = autoBody<CoffeeWithRoaster>().toLens()
+    val newCoffeeRequestLens = autoBody<NewCoffeeRequest>().toLens()
 
     return routes(
         "/coffees" bind Method.GET to {
             val coffeeList = repository.allCoffees()
             allCoffeesLens.inject(coffeeList, Response(Status.OK))
+        },
+
+        "/coffees" bind Method.POST to { request ->
+            val newCoffeeRequest = newCoffeeRequestLens.extract(request)
+            val success = service.createCoffeeWithRoaster(newCoffeeRequest.coffeeName, newCoffeeRequest.roastedBy)
+            if (success) {
+                Response(Status.CREATED, "New coffee created!")
+            } else {
+                Response(Status.BAD_REQUEST, "Roaster not found")
+            }
         },
 
         "/coffees/byName/{name}" bind Method.GET to { request ->

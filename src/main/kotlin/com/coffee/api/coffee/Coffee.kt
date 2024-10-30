@@ -6,3 +6,8 @@ data class CoffeeWithRoaster(
     val coffeeName: String,
     val roastedBy: String
 )
+
+data class NewCoffeeRequest(
+    val coffeeName: String,
+    val roastedBy: String
+)
