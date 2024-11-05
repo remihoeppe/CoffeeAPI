@@ -44,28 +44,28 @@ All CRUD method should be refactored to be working with that local DB.
 
 ## File Structure
 
-src
-└── main
-└── kotlin
-└── com
-└── coffee
-└── api
-├── roaster
-│ ├── RoasterTable.kt // Defines RoasterTable, RoasterCoffeeTable
-│ ├── RoasterDAO.kt // RoasterDAO class with relationships
-│ ├── RoasterService.kt // Business logic for roasters
-│ ├── RoasterController.kt // API endpoints for roasters
-│ ├── Roaster.kt // Roaster data model
-│ └── RoasterMapper.kt // Mapping functions (like daoToModel)
-├── coffee
-│ ├── CoffeeTable.kt // Defines CoffeeTable
-│ ├── CoffeeDAO.kt // CoffeeDAO class
-│ ├── CoffeeService.kt // Business logic for coffees
-│ ├── CoffeeController.kt // API endpoints for coffees
-│ └── Coffee.kt // Coffee data model
-└── utils
-├── DbTransaction.kt // Database transaction helper
-└── Mappings.kt // Any shared mapping logic
+    src
+    └── main
+        └── kotlin
+            └── com
+                └── coffee
+                    └── api
+                        ├── roaster
+                        │   ├── RoasterTable.kt // Defines RoasterTable, RoasterCoffeeTable
+                        │   ├── RoasterDAO.kt // RoasterDAO class with relationships
+                        │   ├── RoasterService.kt // Business logic for roasters
+                        │   ├── RoasterController.kt // API endpoints for roasters
+                        │   ├── Roaster.kt // Roaster data model
+                        │   └── RoasterMapper.kt // Mapping functions (like daoToModel)
+                        ├── coffee
+                        │   ├── CoffeeTable.kt // Defines CoffeeTable
+                        │   ├── CoffeeDAO.kt // CoffeeDAO class
+                        │   ├── CoffeeService.kt // Business logic for coffees
+                        │   ├── CoffeeController.kt // API endpoints for coffees
+                        │   └── Coffee.kt // Coffee data model
+                        └── utils
+                        ├── DbTransaction.kt // Database transaction helper
+                        └── Mappings.kt // Any shared mapping logic
 
 ## Qs:
 

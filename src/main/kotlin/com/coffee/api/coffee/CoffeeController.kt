@@ -1,24 +1,25 @@
 package com.coffee.api.coffee
 
-import org.http4k.core.Method
-import org.http4k.core.Response
-import org.http4k.core.Status
+import org.http4k.core.*
+import org.http4k.format.Jackson.json
 import org.http4k.format.Moshi.autoBody
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
 import org.http4k.routing.path
 import org.http4k.routing.routes
 
+
 fun coffeeRoutes(repository: CoffeeRepository, service: CoffeeService): RoutingHttpHandler {
 
-    val allCoffeesLens = autoBody<List<Coffee>>().toLens()
     val coffeeWithRoasterLens = autoBody<CoffeeWithRoaster>().toLens()
     val newCoffeeRequestLens = autoBody<NewCoffeeRequest>().toLens()
+
+//    TODO: Remove all useless use of lenses
 
     return routes(
         "/coffees" bind Method.GET to {
             val coffeeList = repository.allCoffees()
-            allCoffeesLens.inject(coffeeList, Response(Status.OK))
+            Response(Status.OK).json(coffeeList)
         },
 
         "/coffees" bind Method.POST to { request ->

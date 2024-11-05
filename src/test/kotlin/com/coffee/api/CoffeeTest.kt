@@ -6,7 +6,6 @@ import com.coffee.api.TestUtils.expectCreated
 import org.http4k.core.Method
 import org.http4k.core.Request
 import org.junit.jupiter.api.Test
-import com.coffee.api.TestUtils.expectNoContent
 import com.coffee.api.TestUtils.expectNotFound
 import com.coffee.api.TestUtils.expectOK
 import com.coffee.api.coffee.CoffeeWithRoaster
@@ -75,7 +74,7 @@ class CoffeeTest {
 
     @Test
     fun `API returns all Coffees for a Roaster when valid Roaster name parameter`() {
-
+        api(Request(Method.GET, "/coffees/byRoaster/grindsmith"))
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.coffee.api.coffee
 
-import com.coffee.api.roaster.roasterDAOToModel
 import org.jetbrains.exposed.sql.lowerCase
 import org.jetbrains.exposed.sql.transactions.transaction
 

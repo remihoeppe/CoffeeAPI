@@ -2,7 +2,6 @@ package com.coffee.api.roaster
 
 import com.coffee.api.coffee.Coffee
 
-
 class RoasterInMemoryRepository : RoasterRepository {
     private var coffees = listOf(Coffee("Good Coffee"), Coffee("More Good Coffee"))
 
